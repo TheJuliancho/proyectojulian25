@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+
+    <title>Menu</title>
+    <style>
+        .contenedor-tarjetas {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .tarjeta {
+            margin: 10px;
+        }
+
+        .imagen-tarjeta {
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .imagen-tarjeta:hover {
+            transform: scale(1.5); /* Aumenta el tamaño de la imagen */
+            box-shadow: 0 0 10px rgba(23, 124, 255, 0.5); /* Agrega una sombra */
+            cursor: pointer; /* Cambia el cursor */
+        }
+        .w3-tangerine {
+        font-family: "Tangerine", serif;
+        }
+        /* Estilos para el carrito */
+        .carrito {
+            position: fixed;
+            top: 5px;
+            right: 5px;
+            background-color: #02a2ca;
+            padding: 5px;
+            border: 3px solid #7201db;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body> 
+    <center>
+    <div class="w3-container w3-tangerine">
+        <h1><p class="w3-jumbo">Mis productos</p></h1>
+    </div>
+    </center>
+    <center>
+        <!-- Mostrar productos del menú -->
+<div class="contenedor-tarjetas">
+    {% for menu in data %}
+        <div id="tarjeta-{{ menu.idProducto }}" class="w3-card-4 tarjeta">
+            <div class="w3-container w3-center-tangerine">
+                <h3>{{ menu.nameProducto }}</h3>
+                {% if menu.imagenProducto %}
+                    <img class="imagen-tarjeta" src="{{ url_for('static', filename='imagenes/' + menu.get_img('imagenProducto')) }}"
+                        alt="{{ menu.nameProducto }}" width="140" height="140">
+                {% else %}
+                    Sin imagen
+                {% endif %}
+                <h5>{{ menu.DescripcionProducto }}</h5>
+                <h5>Precio: {{ menu.precioProducto }}</h5>
+                <a href="{{ url_for('menu.edit', id=menu.idProducto) }}"><button class="w3-button w3-hover-red">Editar</button></a>
+                <a href="{{ url_for('menu.delete', id=menu.idProducto) }}"><button class="w3-button w3-red">Eliminar</button></a><br><br>
+                <a href="{{ url_for('carrito.agregar_carrito', idProducto=menu.idProducto) }}">
+                    <button class="w3-button w3-green">Agregar al Carrito</button></a> 
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Mostrar carrito -->
+<div class="carrito">
+    <h3>Carrito De Compras</h3>
+    {% if carrito %}
+        <ul>
+            {% for carrito, producto in carrito %}
+                <li>
+                    {{ producto.nameProducto }} - Cantidad: {{ carrito.cantidad }}
+                </li>
+            {% endfor %}
+        </ul>
+        <form action="{{ url_for('carrito.comprar_carrito') }}" method="post">
+            <button type="submit" class="w3-button w3-green">Realizar Compra</button>
+        </form>
+    {% else %}
+        <p>No hay productos en el carrito.</p>
+    {% endif %}
+</div>
+
+</div>
+</div>
+<br>
+
+<a href="{{ url_for('menu.add') }}"><button class="w3-button w3-hover-Deep Purple">agregar producto</button></a><br><br>
+
+<a href="{{ url_for('productos.index') }}"><button class="w3-button w3-hover-Deep Purple"><i class="glyphicon glyphicon-home"></i></a></button></a>
+
+
+    
+    </center>
+    
+    
+</body>
+</html>
+

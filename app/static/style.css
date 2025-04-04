@@ -1,0 +1,23 @@
+body {
+    background-image: url("{{ url_for('static', filename='imagenes/login.jpg') }}");
+    background-size: cover; /* Cubre toda la ventana */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    height: 100vh; /* Asegura que el fondo cubra toda la altura de la pantalla */
+    margin: 50; /* Elimina márgenes predeterminados */
+}
+.tarjeta {
+    transition: transform 0.3s ease-in-out;
+}
+
+.tarjeta:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.tarjeta.seleccionado {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    z-index: 1; /* Asegura que se muestra encima de otras */
+    background-color: #063eda; /* Cambia el color de fondo */
+}

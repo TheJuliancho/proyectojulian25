@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto</title>
+</head>
+<body><center>
+    <h1>Información de Contacto</h1>
+    <table class="w3-table w3-blue">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>DescripcionProducto </th>
+            <th>precio</th>
+        </tr>
+        {% for contacto in datapro %}
+            <tr>
+                <td>{{ contacto.idContacto}}</td>
+                <td>{{ contacto.nameContacto }}</td>
+                <td>{{ contacto.cellContacto }}</td>
+                <td>{{ contacto.Email }}</td>
+                <td>
+                {# <a href="{{ url_for('productos.edit', id=contacto.idContacto) }}">Editar</a>
+                    <a href="{{ url_for('productos.delete', id=contacto.nameContacto) }}">Eliminar</a>#}
+                    <!-- Agrega aquí el enlace para eliminar -->
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+    <a href="{{ url_for('productos.index') }}"><button class="w3-button w3-hover-Deep Purple">Ir al inicio</button></a>
+
+    <i class="glyphicon glyphicon-home"></i></a>
+
+
+</center>
+    
+</body>
+</html>

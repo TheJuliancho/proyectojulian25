@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Agregar Productos</title>
+</head>
+<body><center>
+
+    <h1>Agregar Producto</h1>
+    <form action="{{ url_for('productos.add') }}" method="post">
+
+        
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nameProducto" required>
+        <br>
+        <label for="nombre">tipo de Producto:</label>
+        <input type="text" id="nombre" name="tipoProducto" required>
+        
+        <button type="submit">Agregar Producto</button>
+    </form>
+</center>
+    
+</body>
+</html>

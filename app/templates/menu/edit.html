@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Editar Producto</title>
+</head>
+<body>
+    <h1>Editar producto</h1>
+    <form action="{{ url_for('menu.edit', id=menu.idProducto) }}" method="post">
+        <label for="name">Nombre:</label>
+        <input type="text" id="nameProducto" name="nameProducto" value="{{ menu.nameProducto }}" required>
+        
+        <label for="name">DescripcionProducto:</label>
+        <input type="text" id="DescripcionProducto" name="DescripcionProducto" value="{{ menu.DescripcionProducto }}" required>
+        
+        <label for="name">precioProducto:</label>
+        <input type="text" id="precioProducto" name="precioProducto" value="{{ menu.precioProducto }}" required>
+        
+        <label for="name">imagenProducto:</label>
+        <input type="text" id="imagenProducto" name="imagenProducto" value="{{ menu.imagenProducto }}" required>
+        <button type="submit">Actualizar</button>
+
+    </form>
+</body>
+</html>
