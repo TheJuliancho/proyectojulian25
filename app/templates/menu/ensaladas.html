@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menú</title>
+
+  <!-- Estilos externos -->
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tangerine&family=Roboto&display=swap" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      background: url('{{ url_for("static", filename="imagenes/menufond.jpg") }}')
+                  no-repeat center center fixed;
+      background-size: cover;
+      background-color: #f7f1e3;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, .w3-jumbo {
+      font-family: 'Tangerine', cursive;
+      font-size: 3.5rem;
+      color: #4e342e;
+      margin-top: 20px;
+    }
+
+    .contenedor-tarjetas {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .tarjeta {
+      margin: 15px;
+      width: 240px;
+      background: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+      background-color: #f7f1e3;
+      background-blend-mode: multiply;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      padding: 15px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tarjeta:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .imagen-tarjeta {
+      transition: transform 0.2s ease-in-out;
+      border-radius: 8px;
+      width: 100%;
+      height: auto;
+    }
+
+    .imagen-tarjeta:hover {
+      transform: scale(1.1);
+      cursor: pointer;
+    }
+
+    /* Descripción emergente */
+    .descripcion-hover {
+      position: relative;
+      display: inline-block;
+    }
+
+    .descripcion-contenido {
+      visibility: hidden;
+      width: 200px;
+      background-color: rgba(255, 255, 255, 0.95);
+      color: #333;
+      text-align: center;
+      border-radius: 8px;
+      padding: 10px;
+      position: absolute;
+      z-index: 2;
+      bottom: 110%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      transition: opacity 0.3s ease;
+    }
+
+    .descripcion-hover:hover .descripcion-contenido {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .carrito {
+      position: fixed;
+      top: 0;
+      right: -320px;
+      height: 100%;
+      width: 300px;
+      background: url('https://www.transparenttextures.com/patterns/wood-pattern.png'), #fef9f1;
+      background-blend-mode: overlay;
+      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      transition: right 0.3s ease;
+      z-index: 9999;
+      overflow-y: auto;
+      border-left: 4px solid #a67c52;
+    }
+
+    .carrito.abierto {
+      right: 0;
+    }
+
+    .carrito h3 {
+      color: #5e3c2b;
+      text-align: center;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+
+    .carrito ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .carrito li {
+      background-color: rgba(255, 255, 255, 0.85);
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 8px;
+      color: #333;
+      font-size: 14px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .carrito button {
+      width: 100%;
+      background-color: #795548;
+      border: none;
+      padding: 10px;
+      color: white;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .carrito button:hover {
+      background-color: #5d4037;
+    }
+
+    .boton-carrito {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #795548;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 10000;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .boton-carrito:hover {
+      background-color: #5d4037;
+    }
+
+    .botones-finales {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .botones-finales button {
+      margin: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Barra superior -->
+<div style="background-color: #3e2723; color: white; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+  <div style="display: flex; align-items: center;">
+    <img src="{{ url_for('static', filename='imagenes/logo.jfif') }}" alt="Logo" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
+    <span style="font-family: 'Tangerine', cursive; font-size: 2.5rem;">Mis Ensaladas</span>
+    <a href="{{ url_for('productos.index') }}">
+      <button class="w3-button w3-coffie">
+        <i class="glyphicon glyphicon-home"></i> 
+      </button>
+    </a>
+  </div>
+    
+  {% if current_user.is_authenticated %}
+    <a href="{{ url_for('auth.logout') }}" title="Cerrar sesión" style="color: white; text-decoration: none; font-size: 1.2rem;">
+      <i class="fa-solid fa-right-from-bracket"></i> 
+    </a>
+  {% endif %}
+</div>
+
+<!-- Contenedor de productos -->
+<div class="contenedor-tarjetas">
+  {% for menu in data %}
+    <div id="tarjeta-{{ menu.idProducto }}" class="w3-card-4 tarjeta">
+      <div class="w3-container">
+        {% if menu.imagenProducto %}
+          <div class="descripcion-hover">
+            <img class="imagen-tarjeta"
+              src="{{ url_for('static', filename='imagenes/' + menu.get_img('imagenProducto')) }}"
+              alt="{{ menu.nameProducto }}">
+            <div class="descripcion-contenido">
+              {{ menu.DescripcionProducto }}
+            </div>
+          </div>
+        {% else %}
+          <p>Sin imagen</p>
+        {% endif %}
+
+        <h3>{{ menu.nameProducto }}</h3>
+        <h5>Precio: ${{ menu.precioProducto }}</h5>
+
+        {% if current_user.rol == 'admin' %}
+          <a href="{{ url_for('menu.edit', id=menu.idProducto) }}">
+            <button class="w3-button w3-hover-red">Editar</button>
+          </a>
+          <a href="{{ url_for('menu.delete', id=menu.idProducto) }}">
+            <button class="w3-button w3-red">Eliminar</button>
+          </a>
+        {% endif %}
+        <br><br>
+        <a href="{{ url_for('carrito.agregar_carrito', idProducto=menu.idProducto) }}">
+          <button class="w3-button w3-green">Agregar al Carrito</button>
+        </a>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<!-- Botón flotante del carrito -->
+<button class="boton-carrito" onclick="toggleCarrito()">🛒</button>
+
+<!-- Carrito -->
+<div id="carrito" class="carrito">
+  <h3>Carrito De Compras</h3>
+  {% if carrito %}
+    <ul>
+      {% for carrito_item, producto in carrito %}
+        <li>
+          {{ producto.nameProducto }}<br>
+          Cantidad: {{ carrito_item.cantidad }}<br>
+          Precio: ${{ producto.precioProducto }}<br>
+          Subtotal: ${{ producto.precioProducto * carrito_item.cantidad }}
+        </li>
+      {% endfor %}
+    </ul>
+    <form action="{{ url_for('carrito.comprar_carrito') }}" method="post">
+      <button type="submit">Realizar Compra</button>
+    </form>
+  {% else %}
+    <p>No hay productos en el carrito.</p>
+  {% endif %}
+</div>
+
+<!-- Botón para agregar ensalada -->
+<div class="botones-finales">
+  <a href="{{ url_for('menu.ensaladasadd') }}">
+    <button class="w3-button w3-blue">Agregar Ensalada</button>
+  </a>
+</div>
+
+<script>
+  function toggleCarrito() {
+    const carrito = document.getElementById("carrito");
+    carrito.classList.toggle("abierto");
+  }
+</script>
+
+</body>
+</html>

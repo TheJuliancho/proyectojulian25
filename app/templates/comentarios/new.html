@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deja tu reseña – Mi Cafetal</title>
+
+  <!-- Estilos externos -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Tangerine&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      background: url('{{ url_for("static", filename="imagenes/fondologin.jpg") }}') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Roboto', sans-serif;
+      margin: 0; padding: 0;
+    }
+    .contenedor-form {
+      max-width: 600px;
+      margin: 60px auto;
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+      color: #4e342e;
+    }
+    h1 {
+      font-family: 'Tangerine', cursive;
+      font-size: 3.5rem;
+      text-align: center;
+      margin-bottom: 25px;
+      color: #4e342e;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 8px;
+    }
+    textarea.form-control {
+      resize: vertical;
+      font-size: 1rem;
+      min-height: 100px;
+    }
+
+    /* Estilos para selector de estrellas */
+    .rating {
+      direction: rtl; /* Orden invertido para que la estrella 5 sea la primera */
+      unicode-bidi: bidi-override;
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .rating input[type="radio"] {
+      display: none;
+    }
+    .rating label {
+      color: #ddd;
+      cursor: pointer;
+      padding: 0 5px;
+      transition: color 0.3s ease;
+    }
+    .rating label:hover,
+    .rating label:hover ~ label,
+    .rating input[type="radio"]:checked ~ label {
+      color: gold;
+    }
+
+    .btn-submit {
+      display: block;
+      margin: 20px auto 0;
+      width: 100%;
+      background-color: #4e342e;
+      border-color: #4e342e;
+      color: white;
+      font-size: 1.1rem;
+      padding: 10px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+      border: none;
+    }
+    .btn-submit:hover {
+      background-color: #6f4e37;
+      border-color: #6f4e37;
+    }
+    .back-link {
+      text-align: center;
+      margin-top: 15px;
+      display: block;
+      color: #4e342e;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+    small.text-danger {
+      color: #d9534f;
+    }
+  </style>
+</head>
+<body>
+  <div class="contenedor-form">
+    <h1>Deja tu reseña</h1>
+    <form method="post">
+      {{ form.hidden_tag() }}
+
+      <div class="form-group">
+        {{ form.contenido.label }}
+        {{ form.contenido(class="form-control") }}
+        {% for err in form.contenido.errors %}
+          <small class="text-danger">{{ err }}</small>
+        {% endfor %}
+      </div>
+
+      <div class="form-group">
+        {{ form.calificacion.label }}
+        <div class="rating">
+          {% for value, label in form.calificacion.choices %}
+            <input type="radio" id="star{{ value }}" name="{{ form.calificacion.name }}" value="{{ value }}"
+              {% if form.calificacion.data == value %}checked{% endif %} />
+            <label for="star{{ value }}" title="{{ label }}"><i class="fa-solid fa-star"></i></label>
+          {% endfor %}
+        </div>
+        {% for err in form.calificacion.errors %}
+          <small class="text-danger">{{ err }}</small>
+        {% endfor %}
+      </div>
+
+      <button type="submit" class="btn btn-submit">
+        <i class="fa-solid fa-paper-plane"></i> Enviar comentario
+      </button>
+    </form>
+    <a href="{{ url_for('comentarios.listar_comentarios') }}" class="back-link">← Volver a la lista</a>
+  </div>
+</body>
+</html>

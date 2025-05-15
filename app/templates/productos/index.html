@@ -1,64 +1,192 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster&effect=shadow-multiple">
-    <title>inicio</title>
-    
-</head>
-<body> 
-    
-        <div class="w3-bar w3-black">
-            <a class="w3-bar-item w3-button" onclick="openCity('London')" href="{{ url_for('menu.index') }}">Productos</a>
-            
-            <a class="w3-bar-item w3-button" onclick="openCity('London')" href="{{ url_for('contacto.index') }}">Contacto</a>
-            
-            <button class="w3-bar-item w3-button" onclick="openCity('Tokyo')">Reseñas</button>
-        </div>
-    
-    <style>
-        .w3-bar a {
-    color: #181bec; /* Azul claro */
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inicio - Mi Cafetal</title>
+
+  <!-- Estilos externos -->
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster&effect=shadow-multiple" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+
+  <style>
+    body {
+    /* Nuevo fondo: remplaza 'tu-nueva-foto.jpg' por el nombre de tu imagen */
+    background: url('{{ url_for("static", filename="imagenes/fondoP.png") }}')
+                no-repeat center center fixed;
+    background-size: cover;
+    /* Color de respaldo por si no carga la imagen */
+    background-color: #f7f1e3;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+    .w3-bar {
+      background-color: #3e2723;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .w3-bar a,
+    .w3-bar button {
+      color: #ffffff !important;
+      transition: background-color 0.3s;
+      font-weight: bold;
+    }
+
+    .w3-bar a:hover,
+    .w3-bar button:hover {
+      background-color: #6d4c41 !important;
+    }
+
+    .w3-dropdown-content a {
+      background-color: #4e342e;
+    }
+
+    .w3-dropdown-content a:hover {
+      background-color: #6d4c41 !important;
+    }
+
+    .mySlides {
+      display: none;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .w3-content {
+      margin-top: 35px;
+      max-width: 40%;
+    }
+
+    .titulo {
+  font-family: 'Lobster', cursive;
+  font-size: 3.5rem;
+  text-align: center;
+  margin-top: 40px;
+  /* Café oscuro */
+  color: #351c05d0;
+  /* Sombra más marcada */
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.411);
 }
 
-        .mySlides {display:none;}
+.bienvenida {
+  text-align: center;
+  margin-top: 20px;
+  /* Café estándar, algo más claro que el título */
+  color: #351c05d0;
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  /* Sombra ligera para legibilidad */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+}
 
-        .w3-lobster {font-family: "Lobster", Sans-serif;}
-        </style>
-        </head>
-        
-        <div class="w3-content w3-section" style="max-width:40%; margin: auto;">
-            
-            <img class="mySlides" src="static/imagenes/mm.jpg" style="width:100%">
-            <img class="mySlides" src="static/imagenes/login.jpg" style="width:100%">
-        </div>
-        <center>
-            <div class="w3-container w3-lobster">
-            <p class="w3-xxxlarge font-effect-shadow-multiple">Bienvenido A Mi Cafetal !!</p>
-        </div>
-        </center>
-        <script>
-        var myIndex = 0;
-        carousel();
-        
-        function carousel() {
-            var i;
-            var x = document.getElementsByClassName("mySlides");
-            for (i = 0; i < x.length; i++) {
-            x[i].style.display = "none";  
-        }
-            myIndex++;
-            if (myIndex > x.length) {myIndex = 1}    
-            x[myIndex-1].style.display = "block";  
-            setTimeout(carousel, 2000); // Change image every 2 seconds
-        }
-        </script>
-    
-            
-    
-    
+
+
+    .icon-row {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .icon-row i {
+      font-size: 2.5rem;
+      margin: 20px;
+      color: #6d4c41;
+      transition: transform 0.3s;
+    }
+
+    .icon-row i:hover {
+      transform: scale(1.2);
+    }
+
+    footer {
+      background-color: #3e2723;
+      color: white;
+      padding: 15px;
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    @media screen and (max-width: 768px) {
+      .w3-content {
+        max-width: 90%;
+      }
+      .titulo {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <div class="w3-bar">
+    <div class="w3-dropdown-hover">
+      <button class="w3-button">Productos</button>
+      <div class="w3-dropdown-content w3-bar-block w3-card-4">
+        <a href="{{ url_for('menu.index') }}" class="w3-bar-item w3-button">Postres</a>
+        <a href="{{ url_for('menu.pasteles') }}" class="w3-bar-item w3-button">Pasteles</a>
+        <a href="{{ url_for('menu.galletas') }}" class="w3-bar-item w3-button">Galletas</a>
+        <a href="{{ url_for('menu.bebidas') }}" class="w3-bar-item w3-button">Bebidas</a>
+        <a href="{{ url_for('menu.ensaladas') }}" class="w3-bar-item w3-button">Ensaladas</a>
+      </div>
+    </div>
+    <a class="w3-bar-item w3-button" href="{{ url_for('contacto.index') }}">Contacto</a>
+    <a href="{{ url_for('comentarios.listar_comentarios') }}" class="w3-bar-item w3-button">Reseñas</a>
+
+    {% if current_user.is_authenticated %}
+    <a href="{{ url_for('auth.logout') }}"
+      class="w3-bar-item w3-button w3-right"
+      title="Cerrar sesión">
+      <i class="fa-solid fa-right-from-bracket"></i>
+    </a>
+    {% endif %}
+  </div>
+
+  <!-- Título -->
+  <div class="titulo font-effect-shadow-multiple">
+    ¡Bienvenido a Mi Cafetal!
+  </div>
+
+  <!-- Descripción de bienvenida -->
+<div class="bienvenida font-effect-shadow-multiple w3-container">
+  Sumérgete en una experiencia única de sabor y tradición. Disfruta nuestras recetas
+  artesanales hechas con amor.
+</div>
+
+
+  <!-- Carrusel -->
+  <div class="w3-content w3-section">
+    <img class="mySlides" src="static/imagenes/mm.jpg" style="width:100%">
+    <img class="mySlides" src="static/imagenes/login.jpg" style="width:100%">
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Mi Cafetal - Amor en cada bocado</p>
+  </footer>
+
+  <!-- Script de carrusel -->
+  <script>
+    let myIndex = 0;
+    carousel();
+
+    function carousel() {
+      let i;
+      const x = document.getElementsByClassName("mySlides");
+      for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+      }
+      myIndex++;
+      if (myIndex > x.length) { myIndex = 1 }
+      x[myIndex - 1].style.display = "block";
+      setTimeout(carousel, 2500);
+    }
+  </script>
 </body>
 </html>

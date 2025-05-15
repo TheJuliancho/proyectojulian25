@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,35 +8,113 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <head>
+    <!-- tus meta, links, etc. -->
+        <style>
+        body {
+        /* usa url_for para apuntar al fichero en static/images */
+        background: url('{{ url_for("static", filename="imagenes/fondologin.jpg") }}')
+                    no-repeat center center fixed;
+        background-size: cover;
+        font-family: Arial, sans-serif;
+        }
+
+        .login-container {
+        margin-top: 100px;
+        }
+
+        .card {
+        /* semitransparencia para que destaque sobre el fondo */
+        background-color: rgba(0, 0, 0, 0.6);
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .flash-message {
+        margin-bottom: 20px;
+        }
+
+        .btn-primary {
+        width: 100%;
+        background-color: #3119058a;
+        }
+
+        .card-header {
+        background-color: #3119058a;
+        color: white;
+        text-align: center;
+        border-radius: 15px 15px 0 0;
+        }
+
+        .form-control {
+        border-radius: 20px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-link {
+        text-decoration: none;
+        }
+
+        .flash-message.alert {
+        margin-bottom: 10px;
+        }
+    </style>
+</head>
 
 </head>
+
 <body>
 
-<div class="container mt-5">
-    <div class="col-md-6 offset-md-3">
-        <h2>Bienvenido a Mi Cafetal</h2>
-        
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}             
+<div class="container login-container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Bienvenido a Mi Cafetal</h3>
+                </div>
+                <div class="card-body">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
                     {% for category, message in messages %}
-                        <div class="flash-message alert alert-{{ category }}">{{ message }}</div>
+                    <div class="flash-message alert alert-{{ category }}">{{ message }}</div>
                     {% endfor %}
-            {% endif %}
-        {% endwith %}
-        <form method="post" action="{{ url_for('auth.login') }}">
-            <div class="form-group">
-                <label for="nameUser">Username</label>
-                <input type="text" name="nameUser" id="nameUser" class="form-control" required>
+                    {% endif %}
+                    {% endwith %}
+
+                    {% if current_user.is_authenticated %}
+                    <h4>Bienvenido, {{ current_user.nameUser }}!</h4>
+                    {% if current_user.rol == 'admin' %}
+                    <p>Acceso como administrador.</p>
+                    {% else %}
+                    <p>Acceso como cliente.</p>
+                    {% endif %}
+                    <a class="btn btn-primary" href="{{ url_for('auth.logout') }}">Cerrar sesión</a>
+                    {% else %}
+                    <form method="post" action="{{ url_for('auth.login') }}">
+                        <div class="form-group">
+                            <label for="nameUser">Nombre de usuario:</label>
+                            <input type="text" class="form-control" id="nameUser" name="nameUser" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="passwordUser">Clave:</label>
+                            <input type="password" class="form-control" id="passwordUser" name="passwordUser" required>
+                        </div>
+                        <div class="form-group">
+                            <a href="{{ url_for('auth.add') }}" class="btn btn-link">Registrar Usuario</a>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Ingresar</button>
+                    </form>
+                    {% endif %}
+                </div>
             </div>
-            <div class="form-group">
-                <label for="passwordUser">Password</label>
-                <input type="password" name="passwordUser" id="passwordUser" class="form-control" required>
-            </div>
-            <a class="btn btn-primary" href="{{ url_for('auth.add') }}" >Registrar Usuario</a>
-            <button class="btn btn-primary">Ingresar</button>
-        </form>
+        </div>
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
+
 </html>
